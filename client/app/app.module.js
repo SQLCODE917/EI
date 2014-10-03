@@ -2,7 +2,12 @@
 	'use strict';
 
 	angular
+		.module('ei.services', []);
+
+	angular
 		.module('ei', [
-		'ngRoute'
+		'ngRoute',
+		'ei.services'
 	]);
+
 })();
