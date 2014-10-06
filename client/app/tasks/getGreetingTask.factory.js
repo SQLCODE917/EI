@@ -12,7 +12,6 @@
 			this.name = name;
 			
 			this.perform = function() {
-				console.log( "Performing the getGreetingTask" );
 				helloModel.setGreeting( "Hello, " + name + "!" );
 			};
 

@@ -3,17 +3,17 @@
 
 	angular.module('ei')
 		.controller('HelloController', 
-			[ '$scope', 'helloModel', 'getGreetingTask', 'workQueueClient', HelloController ]);
+			[ 'helloModel', 'getGreetingTask', 'workQueueClient', HelloController ]);
 
-	function HelloController( scope, helloModel, getGreetingTask, workQueueClient ) {
+	function HelloController( helloModel, getGreetingTask, workQueueClient ) {
 
-		scope.$watch( function() { return helloModel.greeting(); },
-			function( newGreeting, oldGreeting ) {
-				scope.greeting = newGreeting;
-			});
-		
-		scope.sayHello = function(){
+		/*jshint validthis: true */
+		var self = this;
 
+		self.greeting = helloModel.greeting;
+
+		self.sayHello = function(){
+			
 			workQueueClient.allocateQueue()
 				.push( getGreetingTask.create( "World" ) )
 				.perform();
