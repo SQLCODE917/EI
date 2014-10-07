@@ -20,7 +20,8 @@ module.exports = function( config ) {
 			'app/layout/hello.controller.js',
 			'test/custom.matchers.js',
 			'app/layout/hello.controller.unit.spec.js',
-			'app/services/workQueue.factory.unit.spec.js'
+			'app/services/workQueue.factory.unit.spec.js',
+			'app/services/workQueueClient.factory.unit.spec.js'
 		],
 
 		exclude: [

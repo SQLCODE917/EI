@@ -3,18 +3,17 @@
 
 	describe('Work Queue', function () {
 		
-		beforeEach(module('ei'));
+		beforeEach (module ('ei'));
 		
-		it('should create unique queues', inject (function (workQueue) {
-			var queue1 = workQueue.allocateQueue();
-			var queue2 = workQueue.allocateQueue();
+		it ('should create unique queues', inject (function (workQueue) {
+			var queue1 = workQueue.allocateQueue ();
+			var queue2 = workQueue.allocateQueue ();
 			
-			expect (queue1 == queue2).toBe(false);
-			expect (queue1 === queue2).toBe(false);
+			expect (queue1).not.toBe (queue2);
 		}));
 
-		it('should create queues that can be populated', inject (function (workQueue) {
-			var queue = workQueue.allocateQueue();
+		it ('should create queues that can be populated', inject (function (workQueue) {
+			var queue = workQueue.allocateQueue ();
 
 			expect (queue.clone ().length).toEqual (0);
 
@@ -26,13 +25,13 @@
 			
 		}));
 		
-		it('should create queues that cannot be de-populated', inject (function ( workQueue) {
+		it ('should create queues that cannot be de-populated', inject (function ( workQueue) {
 			
-			var queue = workQueue.allocateQueue();
-			var workItem = function() {};
+			var queue = workQueue.allocateQueue( );
+			var workItem = function () {};
 			queue.push (workItem);
 
-			var queueClone = queue.clone();
+			var queueClone = queue.clone ();
 
 			expect (queueClone.length).toEqual (1);
 
