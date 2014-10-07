@@ -21,7 +21,8 @@ module.exports = function( config ) {
 			'test/custom.matchers.js',
 			'app/layout/hello.controller.unit.spec.js',
 			'app/services/workQueue.factory.unit.spec.js',
-			'app/services/workQueueClient.factory.unit.spec.js'
+			'app/services/workQueueClient.factory.unit.spec.js',
+			'app/tasks/getGreetingTask.factory.unit.spec.js'
 		],
 
 		exclude: [
