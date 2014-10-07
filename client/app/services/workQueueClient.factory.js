@@ -11,25 +11,31 @@
 			/*jshint validthis: true*/
 			var thisClient = this;
 
+			thisClient.queue = workQueue.allocateQueue();
+			
+			thisClient.api = {
+				push: pushTask,
+				tasks: cloneTasks,
+				perform: performWork
+			};
+
 			function performWork() {
-				angular.forEach(thisClient.queue.copy(), function( task ) {
+				angular.forEach(cloneTasks(), function( task ) {
 					task.perform();
 				});
+				return thisClient.api;
 			}
 
 			function pushTask( task ) {
 				thisClient.queue.push( task );
-				return thisClient;
+				return thisClient.api;
 			}
 
-			thisClient.queue = workQueue.allocateQueue();
-			thisClient.perform = performWork;
-			thisClient.push = pushTask;
+			function cloneTasks() {
+				return thisClient.queue.clone();
+			}
 
-			return {
-				push: pushTask,
-				perform: thisClient.performWork
-			}; 
+			return thisClient.api; 
 		}
 
 		return {

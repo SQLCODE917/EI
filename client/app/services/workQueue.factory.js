@@ -15,7 +15,7 @@
 
 			return {
 				push: this.queue.push,
-				copy: this.queue.slice
+				clone: this.queue.slice
 			};
 		}
 

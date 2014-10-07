@@ -7,7 +7,7 @@
 
 	function getGreetingTask( helloModel ) {
 		
-		function Task( name ) {
+		function GreetingTask( name ) {
 			
 			this.name = name;
 			
@@ -16,13 +16,14 @@
 			};
 
 			return {
-				dependencies: this.dependencies,
+				constructor: GreetingTask,
 				perform: this.perform
 			};
 		}
 
 		return {
-			create: function( name ) { return new Task( name ); }
+			create: function( name ) { return new GreetingTask( name ); },
+			constructor: GreetingTask
 		};
 
 	}
