@@ -7,6 +7,13 @@
 
 	function getGreetingTask( helloModel ) {
 		
+		var api = {
+			create: function( name ) { return new GreetingTask( name ); },
+			constructor: GreetingTask
+		};
+
+		return api;
+		
 		function GreetingTask( name ) {
 			
 			this.name = name;
@@ -20,11 +27,6 @@
 				perform: this.perform
 			};
 		}
-
-		return {
-			create: function( name ) { return new GreetingTask( name ); },
-			constructor: GreetingTask
-		};
 
 	}
 })();

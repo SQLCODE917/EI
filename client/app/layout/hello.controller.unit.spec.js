@@ -13,10 +13,12 @@
 				'workQueueClient': workQueueClient
 			});
 		}));
-		
+
+
 		it('should define a greeting', function() {
 			expect(helloController.greeting()).toBeDefined();
 		});
+
 
 		it('should greet when prompted', function() {
 			expect(helloController.greeting()).not.toEqual('Hello, World!');
@@ -25,6 +27,7 @@
 
 			expect(helloController.greeting()).toEqual('Hello, World!');
 		});
+
 
 		it('should greet using the right task', inject(function(getGreetingTask) {
 			var greetingTaskOperator = helloController.sayHello();

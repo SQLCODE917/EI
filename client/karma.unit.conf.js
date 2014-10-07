@@ -19,7 +19,8 @@ module.exports = function( config ) {
 			'app/tasks/getGreetingTask.factory.js',
 			'app/layout/hello.controller.js',
 			'test/custom.matchers.js',
-			'app/layout/hello.controller.unit.spec.js'
+			'app/layout/hello.controller.unit.spec.js',
+			'app/services/workQueue.factory.unit.spec.js'
 		],
 
 		exclude: [

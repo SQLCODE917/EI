@@ -5,41 +5,44 @@
 		.factory('workQueueClient', ['$injector', 'workQueue', WorkQueueClient]);
 
 	function WorkQueueClient( injector, workQueue ) {
+		
+		return {
+			allocateQueue: function() { return new WorkQueueOperator(); }
+		};
 
 		function WorkQueueOperator() {
 			
-			/*jshint validthis: true*/
-			var thisClient = this;
-
-			thisClient.queue = workQueue.allocateQueue();
+			var queue = workQueue.allocateQueue();
 			
-			thisClient.api = {
+			var api = {
 				push: pushTask,
 				tasks: cloneTasks,
 				perform: performWork
 			};
 
+			return api; 
+
+
 			function performWork() {
 				angular.forEach(cloneTasks(), function( task ) {
 					task.perform();
 				});
-				return thisClient.api;
+				return api;
 			}
 
 			function pushTask( task ) {
-				thisClient.queue.push( task );
-				return thisClient.api;
+				queue.push( task );
+				return api;
 			}
 
+			/*
+			 * For logging purposes, the queue, 
+			 * once populated, should not be de-populated.
+			 * */
 			function cloneTasks() {
-				return thisClient.queue.clone();
+				return queue.clone();
 			}
-
-			return thisClient.api; 
 		}
 
-		return {
-			allocateQueue: function() { return new WorkQueueOperator(); }
-		};
 	}	
 })();
