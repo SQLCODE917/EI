@@ -6,14 +6,26 @@
 	<script src="bower_components/angular-route/angular-route.js"></script>
 	<script src="bower_components/firebase/firebase.js"></script>
 	<script src="bower_components/angularfire/dist/angularfire.js"></script>
+	
 	<script src="app/app.module.js"></script>
 	<script src="app/app.routes.js"></script>
+
+	<script src="app/constants/hackerNewsAPIURL.constant.js"></script>
+	<script src="app/constants/hackerNewsAPIVersion.constant.js"></script>
+
 	<script src="app/models/helloModel.factory.js"></script>
+	<script src="app/models/hackerNewsModel.factory.js"></script>
+	
 	<script src="app/services/workQueue.factory.js"></script>
 	<script src="app/services/workQueueClient.factory.js"></script>
+	<script src="app/services/hackerNews.factory.js"></script>
+	
 	<script src="app/tasks/getGreetingTask.factory.js"></script>
+	<script src="app/tasks/getHackerNewsTopStoriesTask.factory.js"></script>
+	
 	<script src="app/layout/hello.controller.js"></script>
-	<script src="app/layout/hackernews.controller.js"></script>
+	<script src="app/layout/hackerNews.controller.js"></script>
+	
 	<script src="app/app.run.js"></script>
 </head>
 <body ng-app="ei" ng-view>
