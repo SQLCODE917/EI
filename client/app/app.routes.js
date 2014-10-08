@@ -1,17 +1,22 @@
 (function () {
 	'use strict';
 
-	angular.module('ei')
+	angular.module ('ei')
 		.config(['$routeProvider', appRoutes]);
 
-	function appRoutes( $routeProvider ) {
+	function appRoutes ($routeProvider) {
 		$routeProvider
-			.when('/', {
+			.when ('/', {
 				templateUrl: 'app/layout/hello.html',
 				controller: 'HelloController',
 				controllerAs: 'Controller'
 			})
-			.otherwise({
+			.when ('/hackernews', {
+				templateUrl: 'app/layout/hackernews.html',
+				controller: 'HackerNewsController',
+				controllerAs: 'Controller'
+			})
+			.otherwise ({
 				redirectTo: '/'
 			});
 	}
