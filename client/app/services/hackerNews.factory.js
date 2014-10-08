@@ -24,24 +24,6 @@
 			return firebase (reference);
 		}
 
-		function onLoad (data) {
-			console.log( "Firebase request loaded" );
-			console.log( data );
-			return data;
-		}
-
-		function onObjectError (error) {
-			console.log( "Firebase Object request failed:" );
-			console.log( error );
-			return {};
-		}
-
-		function onArrayError (error) {
-			console.log( "Firebase Errpr request failed:" );
-			console.log( error );
-			return [];
-		}
-
 		function getFirebaseObject (URL) {
 			var sync = getFirebaseSync (URL);
 			return sync.$asObject ();
