@@ -25,7 +25,8 @@ module.exports = function( config ) {
 			
 			'app/services/workQueue.factory.js',
 			'app/services/workQueueClient.factory.js',
-			'app/services/hackerNews.factory.js',
+			
+			'test/services/hackerNews.test.factory.js',
 
 			'app/tasks/getGreetingTask.factory.js',
 			'app/tasks/getHackerNewsTopStoriesTask.factory.js',

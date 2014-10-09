@@ -3,9 +3,9 @@
 
 	angular.module ('ei')
 		.factory ('getHackerNewsTopStoriesTask', 
-			[ 'hackerNewsModel', 'hackerNewsService', getHackerNewsTopStoriesTask ]);
+			[ '$q', 'hackerNewsModel', 'hackerNewsService', getHackerNewsTopStoriesTask ]);
 
-	function getHackerNewsTopStoriesTask (hackerNewsModel, hackerNewsService) {
+	function getHackerNewsTopStoriesTask ($q, hackerNewsModel, hackerNewsService) {
 		var api = {
 			create: function () { return new HackerNewsTopStoriesTask(); },
 			constructor: HackerNewsTopStoriesTask
@@ -13,38 +13,33 @@
 
 		return api;
 
+		/*
+		 * Coupling? 
+		 * The $watch handler in the Service is executed like this:
+		 * handler.call( context, eventArgs )
+		 * in this case, this depends on context like this:
+		 * { data: latest top stories Array of Firebase Object $values }
+		 */
+		function topStoriesWatchHandler (watchEvent) {
+			/*jshint validthis: true */
+			var self = this;
+
+			console.log( "HN Top Stories have changed!" );
+			console.log( "\t" + 
+				self.data[watchEvent.key] + 
+				" had a " + 
+				watchEvent.event 
+			);
+
+			hackerNewsModel.setTopStories (self.data);
+		}
+
 		function HackerNewsTopStoriesTask () {
 		
-			/*
-			 * How embarassing! My implementation details are showing!
-			 * Should they be in the Task, or encapsulated in a client?
-			 * Maybe it's a good thing that all the processing logic is in 1 place...
-			 */	
 			this.perform = function() {
-				hackerNewsService.topstories ()
-					.$loaded ()
+				hackerNewsService.topstories (topStoriesWatchHandler)
 					.then (function (topStories) {
-						console.log ("NH Top Stories loaded!");
-						
-						var getValues = function (firebaseObjects) {
-							var values = [];
-
-							firebaseObjects.forEach (function (object) {
-								values.push (object.$value);
-							});
-
-							return values;
-						};
-
-						hackerNewsModel.setTopStories (getValues (topStories));
-
-						var unwatch = topStories.$watch (function (event) {
-							console.log( "HN Top Stories have changed!" );
-							console.log( "\t" + topStories[event.key].$value + " had a " + event.event );
-
-							hackerNewsModel.setTopStories (getValues (topStories));
-						});
-
+						hackerNewsModel.setTopStories (topStories);
 					})
 					.catch (function (error) {
 						console.log ("NH Top Stories failed to load!");

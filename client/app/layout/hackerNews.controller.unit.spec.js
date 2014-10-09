@@ -3,7 +3,7 @@
 
 	describe ('Hacker News Controller', function() {
 	
-		var hnController;
+		var hackerNewsController;
 
 		beforeEach (module ('ei'));
 		beforeEach (inject (function ($controller, 
@@ -12,7 +12,7 @@
 					workQueueClient,
 					getHackerNewsTopStoriesTask) {
 		
-				hnController = $controller ('HackerNewsController', {
+				hackerNewsController = $controller ('HackerNewsController', {
 					'$firebase': $firebase,
 					'hackerNewsModel': hackerNewsModel,
 					'workQueueClient': workQueueClient,
@@ -21,7 +21,7 @@
 		}));
 
 		it ('should fetch top stories', inject(function (getHackerNewsTopStoriesTask) {
-			var topStoryTaskOperator = hnController.getTopStories ();
+			var topStoryTaskOperator = hackerNewsController.getTopStories ();
 			var topStoryTasks = topStoryTaskOperator.tasks ();
 
 			expect (topStoryTasks.length).toEqual (1);
