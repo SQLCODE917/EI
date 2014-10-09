@@ -17,9 +17,6 @@ module.exports = function( config ) {
 			'app/app.module.js',
 			'app/app.routes.js',
 			
-			'app/constants/hackerNewsAPIURL.constant.js',
-			'app/constants/hackerNewsAPIVersion.constant.js',
-			
 			'app/models/helloModel.factory.js',
 			'app/models/hackerNewsModel.factory.js',
 			
@@ -39,7 +36,8 @@ module.exports = function( config ) {
 			'app/layout/hackerNews.controller.unit.spec.js',
 			'app/services/workQueue.factory.unit.spec.js',
 			'app/services/workQueueClient.factory.unit.spec.js',
-			'app/tasks/getGreetingTask.factory.unit.spec.js'
+			'app/tasks/getGreetingTask.factory.unit.spec.js',
+			'app/tasks/getHackerNewsTopStoriesTask.factory.unit.spec.js'
 		],
 
 		exclude: [

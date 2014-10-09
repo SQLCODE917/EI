@@ -40,12 +40,7 @@
 				hackerNewsService.topstories (topStoriesWatchHandler)
 					.then (function (topStories) {
 						hackerNewsModel.setTopStories (topStories);
-					})
-					.catch (function (error) {
-						console.log ("NH Top Stories failed to load!");
-						console.log (error);
 					});
-
 			};
 
 			return {
