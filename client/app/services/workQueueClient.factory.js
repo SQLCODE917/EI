@@ -2,9 +2,9 @@
 	'use strict';
 
 	angular.module('ei')
-		.factory('workQueueClient', ['$injector', 'workQueue', WorkQueueClient]);
+		.factory('workQueueClient', ['workQueue', WorkQueueClient]);
 
-	function WorkQueueClient( injector, workQueue ) {
+	function WorkQueueClient( workQueue ) {
 		
 		return {
 			allocateQueue: function() { return new WorkQueueOperator(); }

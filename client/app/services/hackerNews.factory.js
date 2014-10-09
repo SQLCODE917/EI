@@ -34,16 +34,6 @@
 			return sync.$asArray ();
 		}
 
-		function getValuesFromFirebaseArray (firebaseObjects) {
-			var values = [];
-
-			firebaseObjects.forEach (function (object) {
-				values.push (object.$value);
-			});
-
-			return values;
-		}
-	
 		/* 
 		 * Stories, comments, jobs, Ask HNs and even polls are just items. 
 		 * They're identified by their ids, which are unique integers
@@ -62,34 +52,8 @@
 		/*
 		 * The current top 100 stories
 		 */
-		function topstories (watchHandler) {
-			var deferred = $q.defer ();
-
-			getFirebaseArray (API_URL + API_Version + 'topstories')
-				.$loaded ()
-				.then (function (topStories) {
-					console.log ("Got top stories!");
-					
-					/*
-					 * Context as filter:
-					 * parse the Firebase Object Array into a regular Array,
-					 * like all other data returned
-					 */
-					var unwatch = topStories.$watch (watchHandler, {
-						data: getValuesFromFirebaseArray(topStories)	
-					});
-
-					deferred.resolve (getValuesFromFirebaseArray (topStories));
-
-				})
-				.catch (function (error) {
-					console.log ("Did not get top stories!");
-					console.log (error);
-					
-					deferred.resolve ([]);
-				});
-
-			return deferred.promise;
+		function topstories () {
+			return getFirebaseArray (API_URL + API_Version + 'topstories').$loaded();
 		}
 
 		/*

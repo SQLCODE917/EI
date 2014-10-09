@@ -11,13 +11,11 @@
 			item: item,
 			user: user,
 			topstories: topstories,
-			simulateTopstoriesUpdate: simulateTopstoriesUpdate,
 			maxitem: maxitem,
 			updates: updates
 		};
 
 		var updateData;
-		var topStoriesWatchHandler;
 
 		return api;
 
@@ -29,8 +27,7 @@
 			return {};
 		}
 
-		function topstories (watchHandler) {
-			topStoriesWatchHandler = watchHandler;
+		function topstories () {
 			var deferred = $q.defer ();
 			
 			var testStories = [ 8414149, 8414078, 8413972, 8411638, 8414102, 8413204 ];
@@ -38,12 +35,6 @@
 			deferred.resolve (testStories);
 			
 			return deferred.promise;
-		}
-
-		function simulateTopstoriesUpdate (data, eventData) {
-			updateData = data;
-
-			topStoriesWatchHandler.call ( { data: data }, eventData );
 		}
 
 		function maxitem () {

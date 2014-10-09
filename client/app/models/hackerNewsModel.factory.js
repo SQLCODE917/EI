@@ -5,21 +5,21 @@
 		.factory ('hackerNewsModel', hackerNewsModel);
 
 	function hackerNewsModel () {
-		var topStories;
+		var topstories;
 		
 		var api = {
-			topStories: getTopStories,
-			setTopStories: setTopStories
+			getTopstories: getTopstories,
+			setTopstories: setTopstories
 		};
 
 		return api;
 
-		function getTopStories () {
-			return topStories;
+		function setTopstories (newTopstories) {
+			topstories = newTopstories;
 		}
 
-		function setTopStories (newTopStories) {
-			topStories = newTopStories;	
+		function getTopstories () {
+			return topstories;
 		}
 	}
 })();

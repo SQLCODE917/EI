@@ -17,7 +17,6 @@
 			return workQueueClient.allocateQueue()
 				.push( getGreetingTask.create( "World" ) )
 				.perform();
-
 		};
 	}
 })();

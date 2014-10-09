@@ -8,7 +8,7 @@
 		it ('should update the top stories', inject (
 				function ($rootScope, hackerNewsModel, getHackerNewsTopStoriesTask) {
 			
-			spyOn (hackerNewsModel, 'setTopStories');
+			spyOn (hackerNewsModel, 'setTopstories');
 
 /*
  * When testing, there is no $digest loop,
@@ -17,7 +17,6 @@
 			var scope = $rootScope.$new();
 
 			getHackerNewsTopStoriesTask
-				.create()
 				.perform();
 
 		/*
@@ -25,33 +24,9 @@
 		 */
 			scope.$digest();
 			
-			expect (hackerNewsModel.setTopStories)
+			expect (hackerNewsModel.setTopstories)
 				.toHaveBeenCalledWith ([ 8414149, 8414078, 8413972, 8411638, 8414102, 8413204 ]);
 		}));
 
-		it ('should propagate the changes to top stories', inject( function (
-					$rootScope, 
-					hackerNewsModel, 
-					hackerNewsService, 
-					getHackerNewsTopStoriesTask) {
-
-			var scope = $rootScope.$new();
-
-			getHackerNewsTopStoriesTask
-				.create ()
-				.perform ();
-			
-			scope.$digest();
-
-			spyOn (hackerNewsModel, 'setTopStories');
-
-			hackerNewsService.simulateTopstoriesUpdate ([8414149],
-				{key: 0, event: "", prevChild: ""});
-			
-			scope.$digest();
-
-			expect (hackerNewsModel.setTopStories)
-				.toHaveBeenCalledWith ([8414149]);
-		}));
 	});
 })();

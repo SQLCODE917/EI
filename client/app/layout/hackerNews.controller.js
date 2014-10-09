@@ -3,13 +3,12 @@
 
 	angular.module ('ei')
 		.controller ('HackerNewsController',
-			[ '$firebase', 
-			'hackerNewsModel',
+			[ 'hackerNewsModel',
 			'workQueueClient', 
 			'getHackerNewsTopStoriesTask', 
 			HackerNewsController ]);
 
-	function HackerNewsController (firebase, 
+	function HackerNewsController (
 		hackerNewsModel, 
 		workQueueClient, 
 		getHackerNewsTopStoriesTask) {
@@ -17,12 +16,14 @@
 		/*jshint validthis: true */
 		var self = this;
 		
-		self.topStories = hackerNewsModel.topStories;
+		self.topstories = hackerNewsModel.getTopstories;
 
 		self.getTopStories = function () {
+		
 			return workQueueClient.allocateQueue()
-				.push (getHackerNewsTopStoriesTask.create ())
+				.push (getHackerNewsTopStoriesTask)
 				.perform();
+
 		};
 	}
 })();
