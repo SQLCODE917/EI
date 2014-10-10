@@ -8,7 +8,8 @@
 	function getHackerNewsTopStoriesTask (hackerNewsService) {
 
 		var api = {	
-			create: function () { return new TaskInstance(); }
+			create: function () { return new TaskInstance(); },
+			constructor: getHackerNewsTopStoriesTask
 		};
 
 		return api;
@@ -18,6 +19,7 @@
 			var resultHandlerTask;
 
 			var api = {
+				constructor: getHackerNewsTopStoriesTask,
 				perform: perform,
 				andThen: andThen
 			};

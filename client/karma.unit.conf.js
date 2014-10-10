@@ -38,7 +38,8 @@ module.exports = function( config ) {
 			'app/services/workQueue.factory.unit.spec.js',
 			'app/services/workQueueClient.factory.unit.spec.js',
 			'app/tasks/getGreetingTask.factory.unit.spec.js',
-			'app/tasks/getHackerNewsTopStoriesTask.factory.unit.spec.js'
+			'app/tasks/getHackerNewsTopStoriesTask.factory.unit.spec.js',
+			'app/tasks/getUpdateHackerNewsModelTask.factory.unit.spec.js'
 		],
 
 		exclude: [

@@ -8,6 +8,7 @@
 	function getUpdateHackerNewsModelTask (hackerNewsModel) {
 
 		var api = {
+			constructor: getUpdateHackerNewsModelTask,
 			create: function (setterFunctionName) { return new TaskInstance (setterFunctionName);}
 		};
 
@@ -16,6 +17,7 @@
 		function TaskInstance (setterFunctionName) {
 
 			var api = {
+				constructor: getUpdateHackerNewsModelTask,
 				perform: perform
 			};
 
