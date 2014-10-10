@@ -28,7 +28,6 @@
 				
 				if (data)
 				{
-					$log.info ("Passing a data object of length " + data.length);
 					hackerNewsModel [setterFunctionName](data);
 				}
 			}

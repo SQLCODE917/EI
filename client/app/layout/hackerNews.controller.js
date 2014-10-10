@@ -30,7 +30,8 @@
 					getHackerNewsTopStoriesTask.create()
 					.andThen(
 						getUpdateHackerNewsModelTask.create('setTopstories')
-					))
+					)
+				)
 				.perform();
 
 		};
