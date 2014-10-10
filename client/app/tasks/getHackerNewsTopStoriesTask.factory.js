@@ -3,21 +3,39 @@
 
 	angular.module ('ei')
 		.factory ('getHackerNewsTopStoriesTask', 
-			[ 'hackerNewsModel', 'hackerNewsService', getHackerNewsTopStoriesTask ]);
+			[ 'hackerNewsService', getHackerNewsTopStoriesTask ]);
 
-	function getHackerNewsTopStoriesTask (hackerNewsModel, hackerNewsService) {
-		var api = {
-			perform: perform
+	function getHackerNewsTopStoriesTask (hackerNewsService) {
+
+		var api = {	
+			create: function () { return new TaskInstance(); }
 		};
 
 		return api;
 
-		function perform () {
-			hackerNewsService
-				.topstories()
-				.then (function (topstories) {
-					hackerNewsModel.setTopstories( topstories );
-				});
+		function TaskInstance () {
+
+			var resultHandlerTask;
+
+			var api = {
+				perform: perform,
+				andThen: andThen
+			};
+
+			return api;
+
+			function andThen (onResult)
+			{
+				resultHandlerTask = onResult;
+				return api;
+			}
+
+			function perform () {
+				var work = hackerNewsService
+					.topstories();
+				if (resultHandlerTask)
+					work.then (resultHandlerTask.perform);
+			}
 		}
 	}
 })();

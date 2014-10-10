@@ -3,9 +3,9 @@
 
 	angular.module ('ei.services')
 		.factory ('hackerNewsService',
-			['$q', '$timeout', testHackerNewsService]);
+			['$q', testHackerNewsService]);
 
-	function testHackerNewsService ($q, $timeout) {
+	function testHackerNewsService ($q) {
 		
 		var api = {
 			item: item,

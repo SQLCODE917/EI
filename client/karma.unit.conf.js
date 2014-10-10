@@ -27,6 +27,7 @@ module.exports = function( config ) {
 
 			'app/tasks/getGreetingTask.factory.js',
 			'app/tasks/getHackerNewsTopStoriesTask.factory.js',
+			'app/tasks/getUpdateHackerNewsModelTask.factory.js',
 
 			'app/layout/hello.controller.js',
 			'app/layout/hackerNews.controller.js',

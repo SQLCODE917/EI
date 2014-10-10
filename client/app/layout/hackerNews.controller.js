@@ -6,12 +6,14 @@
 			[ 'hackerNewsModel',
 			'workQueueClient', 
 			'getHackerNewsTopStoriesTask', 
+			'getUpdateHackerNewsModelTask',
 			HackerNewsController ]);
 
 	function HackerNewsController (
 		hackerNewsModel, 
 		workQueueClient, 
-		getHackerNewsTopStoriesTask) {
+		getHackerNewsTopStoriesTask,
+		getUpdateHackerNewsModelTask) {
 
 		/*jshint validthis: true */
 		var self = this;
@@ -20,8 +22,15 @@
 
 		self.getTopStories = function () {
 		
-			return workQueueClient.allocateQueue()
-				.push (getHackerNewsTopStoriesTask)
+			return workQueueClient
+				.allocateQueue()
+				.push (
+					getHackerNewsTopStoriesTask
+					.create()
+					.andThen(
+						getUpdateHackerNewsModelTask
+						.create('setTopstories')
+					))
 				.perform();
 
 		};

@@ -6,9 +6,11 @@
 		beforeEach (module ('ei'));	
 	
 		it ('should update the top stories', inject (
-				function ($rootScope, hackerNewsModel, getHackerNewsTopStoriesTask) {
+				function ($rootScope,
+					hackerNewsService,	
+					getHackerNewsTopStoriesTask) {
 			
-			spyOn (hackerNewsModel, 'setTopstories');
+			spyOn (hackerNewsService, 'topstories');
 
 /*
  * When testing, there is no $digest loop,
@@ -17,6 +19,7 @@
 			var scope = $rootScope.$new();
 
 			getHackerNewsTopStoriesTask
+				.create()
 				.perform();
 
 		/*
@@ -24,8 +27,8 @@
 		 */
 			scope.$digest();
 			
-			expect (hackerNewsModel.setTopstories)
-				.toHaveBeenCalledWith ([ 8414149, 8414078, 8413972, 8411638, 8414102, 8413204 ]);
+			expect (hackerNewsService.topstories)
+				.toHaveBeenCalled();
 		}));
 
 	});
