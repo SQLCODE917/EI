@@ -3,13 +3,15 @@
 
 	angular.module ('ei')
 		.controller ('HackerNewsController',
-			[ 'hackerNewsModel',
+			[ '$log',
+			'hackerNewsModel',
 			'workQueueClient', 
 			'getHackerNewsTopStoriesTask', 
 			'getUpdateHackerNewsModelTask',
 			HackerNewsController ]);
 
 	function HackerNewsController (
+		$log,
 		hackerNewsModel, 
 		workQueueClient, 
 		getHackerNewsTopStoriesTask,
@@ -21,15 +23,13 @@
 		self.topstories = hackerNewsModel.getTopstories;
 
 		self.getTopStories = function () {
-		
-			return workQueueClient
-				.allocateQueue()
+			$log.info ("HN Controller called to get topstories");
+
+			return workQueueClient.allocateQueue()
 				.push (
-					getHackerNewsTopStoriesTask
-					.create()
+					getHackerNewsTopStoriesTask.create()
 					.andThen(
-						getUpdateHackerNewsModelTask
-						.create('setTopstories')
+						getUpdateHackerNewsModelTask.create('setTopstories')
 					))
 				.perform();
 

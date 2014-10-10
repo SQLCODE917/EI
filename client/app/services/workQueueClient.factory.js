@@ -4,15 +4,15 @@
 	angular.module('ei')
 		.factory('workQueueClient', ['workQueue', WorkQueueClient]);
 
-	function WorkQueueClient( workQueue ) {
+	function WorkQueueClient (workQueue) {
 		
 		return {
-			allocateQueue: function() { return new WorkQueueOperator(); }
+			allocateQueue: function () { return new WorkQueueOperator (); }
 		};
 
-		function WorkQueueOperator() {
+		function WorkQueueOperator () {
 			
-			var queue = workQueue.allocateQueue();
+			var queue = workQueue.allocateQueue ();
 			
 			var api = {
 				push: pushTask,
@@ -23,15 +23,15 @@
 			return api; 
 
 
-			function performWork() {
-				angular.forEach(cloneTasks(), function( task ) {
-					task.perform();
+			function performWork () {
+				angular.forEach (cloneTasks (), function (task) {
+					task.perform ();
 				});
 				return api;
 			}
 
-			function pushTask( task ) {
-				queue.push( task );
+			function pushTask (task) {
+				queue.push (task);
 				return api;
 			}
 
@@ -39,8 +39,8 @@
 			 * For logging purposes, the queue, 
 			 * once populated, should not be de-populated.
 			 * */
-			function cloneTasks() {
-				return queue.clone();
+			function cloneTasks () {
+				return queue.clone ();
 			}
 		}
 

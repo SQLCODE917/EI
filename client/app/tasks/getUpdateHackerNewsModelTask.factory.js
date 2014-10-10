@@ -3,9 +3,9 @@
 
 	angular.module ('ei')
 		.factory ('getUpdateHackerNewsModelTask',
-			[ 'hackerNewsModel', getUpdateHackerNewsModelTask ]);
+			[ '$log', 'hackerNewsModel', getUpdateHackerNewsModelTask ]);
 
-	function getUpdateHackerNewsModelTask (hackerNewsModel) {
+	function getUpdateHackerNewsModelTask ($log, hackerNewsModel) {
 
 		var api = {
 			constructor: getUpdateHackerNewsModelTask,
@@ -24,8 +24,11 @@
 			return api;
 
 			function perform (data) {
+				$log.info ("Performing an update task on HN model by invoking " + setterFunctionName);
+				
 				if (data)
 				{
+					$log.info ("Passing a data object of length " + data.length);
 					hackerNewsModel [setterFunctionName](data);
 				}
 			}
