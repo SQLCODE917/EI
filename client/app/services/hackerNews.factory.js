@@ -3,9 +3,9 @@
 
 	angular.module ('ei.services')
 		.factory ('hackerNewsService', 
-			['$q', '$log', '$firebase', 'HACKERNEWS_API_URL', 'HACKERNEWS_API_VERSION', hackerNewsService]);
+			['$log', '$firebase', 'HACKERNEWS_API_URL', 'HACKERNEWS_API_VERSION', hackerNewsService]);
 
-	function hackerNewsService ($q, $log, firebase, API_URL, API_Version) {
+	function hackerNewsService ($log, firebase, API_URL, API_Version) {
 		/*
 		 * https://github.com/HackerNews/API
 		 */
@@ -54,7 +54,8 @@
 		 */
 		function topstories () {
 			$log.info ('Fetching HN topstories from ' + API_URL + API_Version + 'topstories');	
-			return getFirebaseArray (API_URL + API_Version + 'topstories').$loaded();
+			var topstoriesArray = getFirebaseArray (API_URL + API_Version + 'topstories');
+			return topstoriesArray;
 		}
 
 		/*

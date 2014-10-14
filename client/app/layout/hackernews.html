@@ -1,5 +1,3 @@
 <div id='hackerNews' ng-init='Controller.getTopStories()'>
-	<ul>
-		<li ng-repeat="(key, value) in Controller.topstories()">{{ key }} : {{ value.$value }}</li>
-	</ul>
+	<ul hacker-news topstories="Controller.topstories"></ul>
 </div>

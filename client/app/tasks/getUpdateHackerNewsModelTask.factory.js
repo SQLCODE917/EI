@@ -25,7 +25,7 @@
 
 			function perform (data) {
 				$log.info ("Performing an update task on HN model by invoking " + setterFunctionName);
-				
+
 				if (data)
 				{
 					hackerNewsModel [setterFunctionName](data);

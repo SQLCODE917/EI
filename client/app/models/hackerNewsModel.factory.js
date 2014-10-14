@@ -6,7 +6,7 @@
 			[ '$log', hackerNewsModel ]);
 
 	function hackerNewsModel ($log) {
-		var topstories;
+		var topstories = [];
 		
 		var api = {
 			getTopstories: getTopstories,
@@ -16,7 +16,6 @@
 		return api;
 
 		function setTopstories (newTopstories) {
-			$log.info ('Setting HN model.topstories to an object of length ' + newTopstories.length);
 			topstories = newTopstories;
 		}
 

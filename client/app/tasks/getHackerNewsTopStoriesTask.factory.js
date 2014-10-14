@@ -3,9 +3,9 @@
 
 	angular.module ('ei')
 		.factory ('getHackerNewsTopStoriesTask', 
-			[ '$log', 'hackerNewsService', getHackerNewsTopStoriesTask ]);
+			[ '$q', '$log', 'hackerNewsService', getHackerNewsTopStoriesTask ]);
 
-	function getHackerNewsTopStoriesTask ($log, hackerNewsService) {
+	function getHackerNewsTopStoriesTask ($q, $log, hackerNewsService) {
 
 		var api = {	
 			create: function () { return new TaskInstance(); },
@@ -35,7 +35,8 @@
 			function perform () {
 				$log.info ("Performing the HN Topstories task");
 				var work = hackerNewsService
-					.topstories();
+					.topstories ()
+					.$loaded ();
 				
 				/*
 				 * Having a result handler gains us 2 functions:
