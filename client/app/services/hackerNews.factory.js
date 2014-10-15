@@ -55,7 +55,7 @@
 		function topstories () {
 			$log.info ('Fetching HN topstories from ' + API_URL + API_Version + 'topstories');	
 			var topstoriesArray = getFirebaseArray (API_URL + API_Version + 'topstories');
-			return topstoriesArray;
+			return topstoriesArray.$loaded();
 		}
 
 		/*

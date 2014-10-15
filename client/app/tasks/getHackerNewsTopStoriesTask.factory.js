@@ -35,8 +35,7 @@
 			function perform () {
 				$log.info ("Performing the HN Topstories task");
 				var work = hackerNewsService
-					.topstories ()
-					.$loaded ();
+					.topstories ();
 				
 				/*
 				 * Having a result handler gains us 2 functions:
