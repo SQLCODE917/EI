@@ -2,25 +2,89 @@
 	'use strict';
 
 	angular.module ('ei')
-		.directive ('hackerNews', hackernewsDirective);
+		.directive ('hackerNews', 
+			[ 
+			'$q',
+			'hackerNewsService',
+			hackernewsDirective
+			]
+		);
 
-	function hackernewsDirective () {
+	function hackernewsDirective ($q, hackerNewsService) {
+
+		var hackerNewsStory = React.createClass ({
+			displayName: 'HN_STORY',
+
+			render: function () {
+				var story = this.props.story;
+				
+				return (
+					React.DOM.div ( 
+						{'data-hn-id': story.id}, 
+						story.id + " : " + story.title 
+					)
+				);
+			}
+		});
+
 		var topstoriesReactClass = React.createClass ({
 			
 			displayName: 'TOPSTORIES',
 
-			render: function () {
-			
-				var topstories = this.props.topstories;
+			getInitialState: function () {
+				return {
+					topstories: [],
+					unwatch: function () {}
+				};
+			},
 
-				var listItems = topstories.map (function (topstory, index) {
-					//http://facebook.github.io/react/docs/multiple-components.html#dynamic-children
-					// key attribute contains the unique ID for every element in the collection.
-					return (React.DOM.li ( { key: index }, 
-							index + " : " + topstory.$value));
+			componentDidMount: function () {
+				var self = this;
+				
+				var fetchTopstories = function () {
+					var topstoryPromises = self.props.topstoryIDs.map (function (topstoryID, index) {
+						return hackerNewsService.item (topstoryID.$value);
+					});
+
+					$q.all (topstoryPromises).then (function (topstories) {
+						console.log ("All topstory promises resolved! Updating state!");
+						self.setState({ topstories: topstories });	
+					});
+				};
+
+				fetchTopstories();
+				
+				var unwatch = self.props.topstoryIDs.$watch (function (event) {
+					
+					console.log ("Topstories have changed!");
+					console.log (event);
+					fetchTopstories();
 				});
 
-				return (React.DOM.ul (null, listItems));
+				self.setState({unwatch: unwatch});
+			},
+
+			componentWillUnmount: function () {
+				this.state.unwatch ();
+			},
+
+			render: function () {
+				console.log ('Rendeing TOPSTORIES');
+				var topstories = this.state.topstories;
+				
+				var topstoryListItems = [];
+
+				topstoryListItems = topstories.map (function (topstory, index) {
+					return React.DOM.li( 
+						{key: index,
+						"data-hn-id": topstory.id},
+						hackerNewsStory(
+							{story: topstory}
+						)
+					);
+				});
+
+				return (React.DOM.ul (null, topstoryListItems));
 			}
 		});
 
@@ -30,28 +94,14 @@
 				topstories: '='
 			},
 			link: function (scope, element, attributes) {
-			
-				function renderReactComponent (topstories) {
+						
+				scope.topstories().then (function (resolvedTopstoryIDs) {
 					React.renderComponent (
-							topstoriesReactClass ({
-								topstories: topstories
-							}),
-							element[0]
-						);
-				}
-
-				var unwatch = scope.$watchCollection ('topstories()', function (newValue, oldValue) {
-
-					renderReactComponent (newValue);
-					
-					if (newValue.$watch) {
-
-						newValue.$watch (function (event){
-							renderReactComponent (newValue);	
-						});
-
-						unwatch();
-					}
+						topstoriesReactClass ({
+							topstoryIDs: resolvedTopstoryIDs
+						}),
+						element[0]
+					);
 				});
 			}
 		};

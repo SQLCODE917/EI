@@ -37,14 +37,9 @@
 				var work = hackerNewsService
 					.topstories ();
 				
-				/*
-				 * Having a result handler gains us 2 functions:
-				 * First, we can chain tasks
-				 * Second, we can handle errors by passing a null object
-				 */
 				if (resultHandlerTask)
 				{
-					work.then (resultHandlerTask.perform);
+					resultHandlerTask.perform(work);
 					work.catch (function (error) {
 						$log.warn ("Failed to get HN Topstories! Returning an empty set!");
 						$log.warn (error.message);

@@ -39,7 +39,9 @@
 		 * They're identified by their ids, which are unique integers
 		 */
 		function item (id) {
-			return getFirebaseObject (API_URL + API_Version + 'item/' + id);
+			$log.info ('Fetching HN item ' + id + ' from ' + API_URL + API_Version + 'item/');
+			var itemObject = getFirebaseObject (API_URL + API_Version + 'item/' + id);
+			return itemObject.$loaded();
 		}
 
 		/*
