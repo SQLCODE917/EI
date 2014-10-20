@@ -2,10 +2,14 @@
 	'use strict';
 
 	angular.module ('ei')
-		.factory ('getHackerNewsTopStoriesTask', 
-			[ '$q', '$log', 'hackerNewsService', getHackerNewsTopStoriesTask ]);
+		.factory ('getHackerNewsTopStoriesTask', [
+			'$q', 
+			'$log', 
+			'hackerNewsTopstoriesService', 
+			getHackerNewsTopStoriesTask 
+		]);
 
-	function getHackerNewsTopStoriesTask ($q, $log, hackerNewsService) {
+	function getHackerNewsTopStoriesTask ($q, $log, hackerNewsTopstories) {
 
 		var api = {	
 			create: function () { return new TaskInstance(); },
@@ -33,8 +37,7 @@
 			}
 
 			function perform () {
-				var work = hackerNewsService
-					.topstories ();
+				var work = hackerNewsTopstories();
 				
 				if (resultHandlerTask)
 				{
