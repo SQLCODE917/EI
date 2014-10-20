@@ -14,7 +14,7 @@
 				
 				return (
 					React.DOM.div ( 
-						{'data-hn-id': story.id}, 
+						{'data-story-id': story.id}, 
 						story.id + " : " + story.title 
 					)
 				);

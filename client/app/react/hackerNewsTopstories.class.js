@@ -41,10 +41,11 @@
 					});
 				};
 
-				fetchTopstories();
+				fetchTopstories ();
 				
 				var unwatch = self.props.topstoryIDs.$watch (function (event) {
-					fetchTopstories();
+					console.log (event);
+					fetchTopstories ();
 				});
 
 				self.setState({unwatch: unwatch});
@@ -62,7 +63,7 @@
 				topstoryListItems = topstories.map (function (topstory, index) {
 					return React.DOM.li( 
 						{key: index,
-						"data-hn-id": topstory.id},
+						"id": topstory.id},
 						storyReactClass(
 							{story: topstory}
 						)
