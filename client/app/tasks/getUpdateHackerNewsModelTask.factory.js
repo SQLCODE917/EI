@@ -3,33 +3,50 @@
 
 	angular.module ('ei')
 		.factory ('getUpdateHackerNewsModelTask',
-			[ '$log', 'hackerNewsModel', getUpdateHackerNewsModelTask ]);
+			[ '$q', '$log', 'hackerNewsModel', getUpdateHackerNewsModelTask ]);
 
-	function getUpdateHackerNewsModelTask ($log, hackerNewsModel) {
+	function getUpdateHackerNewsModelTask ($q, $log, hackerNewsModel) {
 
 		var api = {
 			constructor: getUpdateHackerNewsModelTask,
-			create: function (setterFunctionName) { return new TaskInstance (setterFunctionName);}
+			create: function (setterFunctionName) { 
+				return new TaskInstance (setterFunctionName);
+			}
 		};
 
 		return api;	
 
 		function TaskInstance (setterFunctionName) {
 
+			var deferred = $q.defer();
+
 			var api = {
 				constructor: getUpdateHackerNewsModelTask,
-				perform: perform
+				perform: perform,
+				useKey: useKey
 			};
 
 			return api;
 
-			function perform (data) {
-				$log.info ("Performing an update task on HN model by invoking " + setterFunctionName);
+			function useKey (key) {
+				
+				api.perform = function (data) {
+					hackerNewsModel [setterFunctionName] (data, key);		
+					
+					deferred.resolve (data);
+					return deferred.promise;
+				};
 
-				if (data)
-				{
-					hackerNewsModel [setterFunctionName](data);
-				}
+
+				
+				return api;
+			}
+
+			function perform (data) {
+				hackerNewsModel [setterFunctionName](data);
+				
+				deferred.resolve (data);
+				return deferred.promise;
 			}
 		}
 	}

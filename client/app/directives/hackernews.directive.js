@@ -5,12 +5,15 @@
 		.directive ('hackerNews', 
 			[ 
 			'$q',
-			'hackerNewsService',
+			'hackerNewsItemCacheService',
 			hackernewsDirective
 			]
 		);
 
-	function hackernewsDirective ($q, hackerNewsService) {
+	function hackernewsDirective (
+		$q, 
+		hackerNewsItemCache
+		) {
 
 		var hackerNewsStory = React.createClass ({
 			displayName: 'HN_STORY',
@@ -43,11 +46,10 @@
 				
 				var fetchTopstories = function () {
 					var topstoryPromises = self.props.topstoryIDs.map (function (topstoryID, index) {
-						return hackerNewsService.item (topstoryID.$value);
+						return hackerNewsItemCache.find (topstoryID.$value);
 					});
 
 					$q.all (topstoryPromises).then (function (topstories) {
-						console.log ("All topstory promises resolved! Updating state!");
 						self.setState({ topstories: topstories });	
 					});
 				};
@@ -69,7 +71,6 @@
 			},
 
 			render: function () {
-				console.log ('Rendeing TOPSTORIES');
 				var topstories = this.state.topstories;
 				
 				var topstoryListItems = [];

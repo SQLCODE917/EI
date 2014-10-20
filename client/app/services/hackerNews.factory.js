@@ -2,10 +2,22 @@
 	'use strict';
 
 	angular.module ('ei.services')
-		.factory ('hackerNewsService', 
-			['$log', '$firebase', 'HACKERNEWS_API_URL', 'HACKERNEWS_API_VERSION', hackerNewsService]);
+		.factory ('hackerNewsService', [
+			'$log', 
+			'$firebase', 
+			'HACKERNEWS_API_URL', 
+			'HACKERNEWS_API_VERSION',
+		   	'hackerNewsItemService',	
+			hackerNewsService
+		]);
 
-	function hackerNewsService ($log, firebase, API_URL, API_Version) {
+	function hackerNewsService (
+		$log, 
+		firebase, 
+		API_URL, 
+		API_Version,
+		hackerNewsItem
+		) {
 		/*
 		 * https://github.com/HackerNews/API
 		 */
@@ -39,8 +51,7 @@
 		 * They're identified by their ids, which are unique integers
 		 */
 		function item (id) {
-			$log.info ('Fetching HN item ' + id + ' from ' + API_URL + API_Version + 'item/');
-			var itemObject = getFirebaseObject (API_URL + API_Version + 'item/' + id);
+			var itemObject = hackerNewsItem (id);
 			return itemObject.$loaded();
 		}
 
@@ -55,7 +66,6 @@
 		 * The current top 100 stories
 		 */
 		function topstories () {
-			$log.info ('Fetching HN topstories from ' + API_URL + API_Version + 'topstories');	
 			var topstoriesArray = getFirebaseArray (API_URL + API_Version + 'topstories');
 			return topstoriesArray.$loaded();
 		}

@@ -23,7 +23,6 @@
 		self.topstories = hackerNewsModel.getTopstories;
 
 		self.getTopStories = function () {
-			$log.info ("HN Controller called to get topstories");
 
 			return workQueueClient.allocateQueue()
 				.push (

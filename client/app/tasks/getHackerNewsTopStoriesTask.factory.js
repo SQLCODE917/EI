@@ -33,7 +33,6 @@
 			}
 
 			function perform () {
-				$log.info ("Performing the HN Topstories task");
 				var work = hackerNewsService
 					.topstories ();
 				
@@ -41,10 +40,12 @@
 				{
 					resultHandlerTask.perform(work);
 					work.catch (function (error) {
+						var deferred = $q.deffer();
+						deferred.resolve ({});
 						$log.warn ("Failed to get HN Topstories! Returning an empty set!");
 						$log.warn (error.message);
 					
-						resultHandlerTask.perform ([]);	
+						resultHandlerTask.perform (deferred.promise);
 					});
 				}
 			}
