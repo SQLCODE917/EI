@@ -7,26 +7,36 @@
 
 		beforeEach (module ('ei'));
 		beforeEach (inject (function ($controller, 
-					$firebase, 
+					$log, 
 					hackerNewsModel, 
-					workQueueClient,
-					getHackerNewsTopStoriesTask) {
+					jExpressionCompiler
+					) {
 		
 				hackerNewsController = $controller ('HackerNewsController', {
-					'$firebase': $firebase,
+					'$log': $log,
 					'hackerNewsModel': hackerNewsModel,
-					'workQueueClient': workQueueClient,
-					'getHackerNewsTopStoriesTask': getHackerNewsTopStoriesTask
+					'jExpressionCompiler': jExpressionCompiler
 				});
 		}));
 
-		it ('should fetch top stories', inject(function (getHackerNewsTopStoriesTask) {
-			var topStoryTaskOperator = hackerNewsController.getTopStories ();
-			var topStoryTasks = topStoryTaskOperator.tasks ();
+		it ('should fetch top stories', inject(function (jExpressionCompiler) {
+			var expectedTasks = { 
+				'chain': [
+					{'hackerNewsTopstoriesService': []},
+					{'updateHackerNewsModelTask': { 'key': 'setTopstories' }}	
+				]
+			};
 
-			expect (topStoryTasks.length).toEqual (1);
-			expect (topStoryTasks[0])
-				.toShareAConstructorWith (getHackerNewsTopStoriesTask.constructor);
+			spyOn (jExpressionCompiler, 'compile');
+			spyOn (jExpressionCompiler, 'run');
+
+			var actualTasks = hackerNewsController.getTopStories ();
+		
+			expect (jExpressionCompiler.compile).toHaveBeenCalled ();
+			expect (jExpressionCompiler.run).toHaveBeenCalled ();
+
+			var testForEquality = JSON.stringify (expectedTasks) === JSON.stringify (actualTasks);
+			expect (testForEquality).toEqual (true);	
 		}));
 	});
 })();

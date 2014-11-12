@@ -5,17 +5,14 @@
 		.controller ('HackerNewsController',
 			[ '$log',
 			'hackerNewsModel',
-			'workQueueClient', 
-			'getHackerNewsTopStoriesTask', 
-			'getUpdateHackerNewsModelTask',
+			'jExpressionCompiler',
 			HackerNewsController ]);
 
 	function HackerNewsController (
 		$log,
 		hackerNewsModel, 
-		workQueueClient, 
-		getHackerNewsTopStoriesTask,
-		getUpdateHackerNewsModelTask) {
+		JExp
+		) {
 
 		/*jshint validthis: true */
 		var self = this;
@@ -24,15 +21,16 @@
 
 		self.getTopStories = function () {
 
-			return workQueueClient.allocateQueue()
-				.push (
-					getHackerNewsTopStoriesTask.create()
-					.andThen(
-						getUpdateHackerNewsModelTask.create('setTopstories')
-					)
-				)
-				.perform();
+			var topStoriesTask = { 
+				'chain': [
+					{'hackerNewsTopstoriesService': []},
+					{'updateHackerNewsModelTask': { 'key': 'setTopstories' }}	
+				]
+			};
+			
+			JExp.run (JExp.compile (topStoriesTask));
 
+			return topStoriesTask;
 		};
 	}
 })();
