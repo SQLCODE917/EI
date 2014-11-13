@@ -13,9 +13,6 @@ module.exports = function( config ) {
 			'app/app.module.js',
 			'app/app.routes.js',
 			'app/models/helloModel.factory.js',
-			'app/services/workQueue.factory.js',
-			'app/services/workQueueClient.factory.js',
-			'app/tasks/getGreetingTask.factory.js',
 			'app/layout/hello.controller.js'
 		],
 

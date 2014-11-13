@@ -2,10 +2,16 @@
 	'use strict';
 
 	angular.module('ei')
-		.controller('HelloController', 
-			[ 'helloModel', 'getGreetingTask', 'workQueueClient', HelloController ]);
+		.controller('HelloController', [ 
+			'helloModel', 
+			'jExpressionCompiler', 
+			HelloController 
+			]);
 
-	function HelloController( helloModel, getGreetingTask, workQueueClient ) {
+	function HelloController ( 
+		helloModel, 
+		JExp 
+		) {
 
 		/*jshint validthis: true */
 		var self = this;
@@ -13,10 +19,12 @@
 		self.greeting = helloModel.greeting;
 
 		self.sayHello = function(){
-			
-			return workQueueClient.allocateQueue()
-				.push( getGreetingTask.create( "World" ) )
-				.perform();
+		
+			var helloTask = { 'greetingTask': "World" };
+
+			JExp.run (JExp.compile (helloTask));
+
+			return helloTask;
 		};
 	}
 })();

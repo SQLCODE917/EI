@@ -20,6 +20,7 @@
 		function end () {}
 
 		function error (exception, input, success, failure) {
+			console.log (exception);
 			throw new Error ({
 				exception: exception,
 				input: input,

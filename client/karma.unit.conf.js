@@ -17,14 +17,12 @@ module.exports = function( config ) {
 			'app/app.module.js',
 			'app/app.routes.js',
 			
-			'app/services/jExpressionM.factory.js',
-			'app/services/jExpressionCompiler.factory.js',
+			'app/util/jExpressionM.factory.js',
+			'app/util/jExpressionCompiler.factory.js',
 
 			'app/models/helloModel.factory.js',
 			'app/models/hackerNewsModel.factory.js',
 			
-			'app/services/workQueue.factory.js',
-			'app/services/workQueueClient.factory.js',
 			'app/services/hackerNewsTopstories.factory.js',
 
 			'test/services/hackerNews.test.factory.js',
@@ -34,12 +32,8 @@ module.exports = function( config ) {
 			'app/layout/hello.controller.js',
 			'app/layout/hackerNews.controller.js',
 			
-			'test/custom.matchers.js',
 			'app/layout/hello.controller.unit.spec.js',
 			'app/layout/hackerNews.controller.unit.spec.js',
-			'app/services/workQueue.factory.unit.spec.js',
-			'app/services/workQueueClient.factory.unit.spec.js',
-			'app/tasks/getGreetingTask.factory.unit.spec.js'
 		],
 
 		exclude: [

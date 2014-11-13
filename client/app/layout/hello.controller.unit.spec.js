@@ -6,35 +6,33 @@
 		var helloController;
 
 		beforeEach (module ('ei'));
-		beforeEach (inject (function ($controller, helloModel, getGreetingTask, workQueueClient) {
+		beforeEach (inject (function (
+					$controller, 
+					helloModel, 
+					jExpressionCompiler
+					) {
 			helloController = $controller ('HelloController', {
 				'helloModel': helloModel,
-				'getGreetingTask': getGreetingTask,
-				'workQueueClient': workQueueClient
+				'jExpressionCompiler': jExpressionCompiler
 			});
 		}));
 
 
-		it ('should define a greeting', function () {
-			expect (helloController.greeting ()).toBeDefined ();
-		});
+		it ('should use the right algorithm', inject (function (jExpressionCompiler) {
+			var expectedTasks = { 'greetingTask': 'World' };
 
+			spyOn (jExpressionCompiler, 'compile');
+			spyOn (jExpressionCompiler, 'run');
+		
+			var actualTasks = helloController.sayHello ();
+		
+			expect (jExpressionCompiler.compile).toHaveBeenCalled ();
+			expect (jExpressionCompiler.run).toHaveBeenCalled ();
 
-		it ('should greet when prompted', function () {
-			expect (helloController.greeting ()).not.toEqual ('Hello, World!');
+			var testForEquality = 
+				JSON.stringify (expectedTasks) === JSON.stringify (actualTasks);
 
-			helloController.sayHello ();
-
-			expect (helloController.greeting ()).toEqual ('Hello, World!');
-		});
-
-
-		it ('should greet using the right task', inject (function (getGreetingTask) {
-			var greetingTaskOperator = helloController.sayHello ();
-			var greetingTasks = greetingTaskOperator.tasks ();
-
-			expect (greetingTasks.length).toEqual (1);
-			expect (greetingTasks[0]).toShareAConstructorWith (getGreetingTask.constructor);
+			expect (testForEquality).toEqual (true);
 		}));
 	});
 })();
