@@ -25,10 +25,6 @@ module.exports = function( config ) {
 			
 			'app/services/hackerNewsTopstories.factory.js',
 
-			'test/services/hackerNews.test.factory.js',
-
-			'app/tasks/getGreetingTask.factory.js',
-
 			'app/layout/hello.controller.js',
 			'app/layout/hackerNews.controller.js',
 			
