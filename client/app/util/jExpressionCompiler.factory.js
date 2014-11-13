@@ -74,17 +74,17 @@
 			};
 		}
 
-		function closeOnFunction (f, args) {
+		function closeOnFunction (f, jExpression) {
 			return asop;
 			function asop (M, input, success, failure) {
 				try {
-					var allArgs = composeArguments (input, args);
-					var result = f.call (null, allArgs);
+					var scope = {'lastReturn': input};
+					var result = f.call (scope, jExpression);
 					M.start (success, result, M.end, failure);
 				} catch (exception) {
 					M.start (
 							failure, 
-							M.error (exception, allArgs, success, failure),
+							M.error (exception, input, success, failure),
 							M.end,
 							M.end
 							);
@@ -113,7 +113,7 @@
 				} else if (angularFunction) {
 					return closeOnFunction (
 							angularFunction,
-							jExpression[operator]
+							jExpression
 							);
 				} else {
 					//error!

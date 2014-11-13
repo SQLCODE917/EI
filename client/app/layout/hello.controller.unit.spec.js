@@ -19,8 +19,8 @@
 
 
 		it ('should use the right algorithm', inject (function (jExpressionCompiler) {
-			var expectedTasks = { 'greetingTask': 'World' };
-
+			var expectedTasks = 
+				{'invoke':['Hello, World!'], 'target':'helloModel', 'key':'setGreeting'};
 			spyOn (jExpressionCompiler, 'compile');
 			spyOn (jExpressionCompiler, 'run');
 		

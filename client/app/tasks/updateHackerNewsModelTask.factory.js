@@ -10,7 +10,7 @@
 
 	function updateHackerNewsModel ($log, hackerNewsModel) {
 		/*
-		 * args: { 'input' : Object, 'args' : Object }
+		 * args: { 'input' : newValue, 'args' : { 'key': propertyName} }
 		 */
 		return function (args) {
 			var key = args.args.key;

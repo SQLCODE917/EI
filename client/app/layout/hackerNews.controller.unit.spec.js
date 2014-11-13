@@ -20,10 +20,10 @@
 		}));
 
 		it ('should fetch top stories', inject(function (jExpressionCompiler) {
-			var expectedTasks = { 
+			var expectedTasks = {
 				'chain': [
-					{'hackerNewsTopstoriesService': []},
-					{'updateHackerNewsModelTask': { 'key': 'setTopstories' }}	
+					{'hackerNewsTopstoriesService':[]},
+					{'invoke':['lastReturn'], 'target':'hackerNewsModel', 'key':'setTopstories'}
 				]
 			};
 

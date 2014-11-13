@@ -20,7 +20,7 @@
 
 		self.sayHello = function(){
 		
-			var helloTask = { 'greetingTask': "World" };
+			var helloTask = {'invoke':['Hello, World!'], 'target':'helloModel', 'key':'setGreeting'};
 
 			JExp.run (JExp.compile (helloTask));
 

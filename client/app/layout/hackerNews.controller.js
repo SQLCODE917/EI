@@ -21,10 +21,10 @@
 
 		self.getTopStories = function () {
 
-			var topStoriesTask = { 
+			var topStoriesTask = {
 				'chain': [
-					{'hackerNewsTopstoriesService': []},
-					{'updateHackerNewsModelTask': { 'key': 'setTopstories' }}	
+					{'hackerNewsTopstoriesService':[]},
+					{'invoke':['lastReturn'], 'target':'hackerNewsModel', 'key':'setTopstories'}
 				]
 			};
 			
