@@ -22,7 +22,7 @@
 		it ('should fetch top stories', inject(function (jExpressionCompiler) {
 			var expectedTasks = {
 				'chain': [
-					{'hackerNewsTopstoriesService':[]},
+					{'getHackerNewsTopstories':[]},
 					{'invoke':['lastReturn'], 'target':'hackerNewsModel', 'key':'setTopstories'}
 				]
 			};

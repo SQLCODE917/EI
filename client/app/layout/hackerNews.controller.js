@@ -23,7 +23,7 @@
 
 			var topStoriesTask = {
 				'chain': [
-					{'hackerNewsTopstoriesService':[]},
+					{'getHackerNewsTopstories':[]},
 					{'invoke':['lastReturn'], 'target':'hackerNewsModel', 'key':'setTopstories'}
 				]
 			};
