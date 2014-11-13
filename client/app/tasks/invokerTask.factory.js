@@ -8,17 +8,16 @@
 			invokerTask
 			]);
 
-	/*
-	 * On an Angular injectable, invokes a specified method with the parameters given
-	 *
-	 * To add an Invoker into your jExpression:
-	 * { 'invoke':[arg,...], 'target':'targetName', 'key':'propertyName' }
-	 * when run, calls targetName.propertyName (args)
-	 */
 	function invokerTask ($log, $injector) {
 		
 		/*
-		 * Precondition: has been invoked with 'lastReturn' in scope
+		 * Precondition: 'lastReturn' in scope
+		 * jExpression: 
+		 * 	{ 'invoke':[arg,...], 'target':'targetName', 'key':'propertyName' }
+		 * Postcondition: 
+		 *	calls targetName.propertyName (args)
+		 * return:
+		 * 	result of the call
 		 */
 		return function (jExpression) {
 			var args = jExpression.invoke;
@@ -35,7 +34,9 @@
 
 			var target = $injector.get (targetName);
 
-			target[key].apply (null, args);
+			var result = target[key].apply (null, args);
+
+			return result;
 		};
 	}
 })();

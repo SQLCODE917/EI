@@ -12,6 +12,7 @@
 		
 		function setGreeting( newGreeting ){
 			thisModel.greeting = newGreeting;
+			return thisModel.greeting;
 		}
 
 		function getGreeting() {

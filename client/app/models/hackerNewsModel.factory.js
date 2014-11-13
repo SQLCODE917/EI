@@ -22,6 +22,7 @@
 
 		function setTopstories (newTopstories) {
 			topstories = newTopstories;
+			return topstories;
 		}
 
 		function getTopstories () {
