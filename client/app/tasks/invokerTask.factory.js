@@ -20,14 +20,13 @@
 		 * 	result of the call
 		 */
 		return function (jExpression) {
-			var args = jExpression.invoke;
+			var args = jExpression.invoke.slice ();
 			var targetName = jExpression.target;
 			var key = jExpression.key;
 			
 			if (!$injector.has (targetName)) {
 				throw new Error ('Invoker Task cannot find ' + target + ' to inject!');
 			}
-			
 			if (args.lastIndexOf ('lastReturn') !== -1) {
 				args.splice (args.lastIndexOf ('lastReturn'), 1, this.lastReturn);
 			}

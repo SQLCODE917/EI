@@ -6,13 +6,15 @@
 			'$q',
 			'hackerNewsStoryReactClass',
 			'hackerNewsItemCacheService',
+			'hackerNewsModel',
 			hackerNewsTopstories
 			]);
 
 	function hackerNewsTopstories (
 		$q, 
 		storyReactClass, 
-		hackerNewsItemCache
+		hackerNewsItemCache,
+		hackerNewsModel
 	) {
 		return React.createClass (
 		{
@@ -32,8 +34,9 @@
 				var fetchTopstories = function () {
 					var topstoryPromises = self.props.topstoryIDs.map (
 						function (topstoryID, index) {
-						
-							return hackerNewsItemCache.find (topstoryID.$value);
+								
+						//return hackerNewsItemCache.find (topstoryID.$value);
+						return hackerNewsModel.getItem (topstoryID.$value);
 					});
 
 					$q.all (topstoryPromises).then (function (topstories) {
@@ -44,7 +47,6 @@
 				fetchTopstories ();
 				
 				var unwatch = self.props.topstoryIDs.$watch (function (event) {
-					console.log (event);
 					fetchTopstories ();
 				});
 

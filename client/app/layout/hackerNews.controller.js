@@ -21,10 +21,21 @@
 
 		self.getTopStories = function () {
 
-			var topStoriesTask = {
-				'chain': [
-					{'getHackerNewsTopstories':[]},
-					{'invoke':['lastReturn'], 'target':'hackerNewsModel', 'key':'setTopstories'}
+			var topStoriesTask = 
+			{ 'chain': [
+					{ 'getHackerNewsTopstories': [] },
+					{ 'invoke': ['lastReturn'], 
+						'target': 'hackerNewsModel', 'key': 'setTopstories' },
+					{ 'then' : [] }, 
+					{ 'map': 
+						{ 'chain' : [ 
+								{ 'getHackerNewsItem' : ['lastReturn'] },
+								{ 'then' : [] },
+								{ 'invoke' : ['lastReturn'], 
+									'target' : 'hackerNewsItemCacheService', 'key': 'save'}
+							] 
+						} 
+					}
 				]
 			};
 			

@@ -31,6 +31,7 @@
 
 		function setItem (item) {
 			items[item.id] = item;
+			return items[item.id];
 		}
 
 		function getItem (itemID) {

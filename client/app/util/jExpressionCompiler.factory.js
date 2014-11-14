@@ -21,7 +21,9 @@
 		};
 
 		api.define ('chain', chainProvider); 
-		
+		api.define ('map', mapProvider);
+		api.define ('then', thenProvider);
+
 		return api;
 
 		function seq (first, next) {
@@ -67,13 +69,6 @@
 				false;
 		}
 
-		function composeArguments (input, args) {
-			return {
-				'input': input,
-				'args': args
-			};
-		}
-
 		function closeOnFunction (f, jExpression) {
 			return asop;
 			function asop (M, input, success, failure) {
@@ -92,13 +87,51 @@
 			}
 		}
 
+		/*
+		 * jExpression:
+		 * { 'chain': [jExp,..]}
+		 */
 		function chainProvider (jExpression) {
 			var operationJExpressions = jExpression.chain;
 			var operations = operationJExpressions.map (
 					function (operationJExpression) {
 						return compile (operationJExpression);
 					});
+
+			
 			return chain (operations);
+		}
+
+		/*
+		 * { map:[jExp,..] }
+		 *
+		 */
+		function mapProvider (jExpression) {
+			var mappingFunction = compile (jExpression.map);
+			
+			return asop;
+
+			function asop (M, input, success, failure) {
+				var results = input.map (function (inputItem) {
+					return mappingFunction (M, inputItem, M.end, failure);
+				} );
+
+				M.start (success, results, M.end, failure);
+			}
+		}
+
+		/*
+		 * { then: [] }
+		 */
+		function thenProvider (jExpression) {
+
+			return asop;
+
+			function asop (M, input, success, failure) {
+				input.then (function (resolvedInput) {
+					M.start ( success, resolvedInput, M.end, failure);
+				});
+			}
 		}
 
 		function compile (jExpression) {
