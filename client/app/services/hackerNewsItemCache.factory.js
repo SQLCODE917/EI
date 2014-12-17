@@ -34,8 +34,6 @@
 		}
 
 		function save (item) {
-			console.log ("Saving to cache:");
-			console.log (item);
 			return hackerNewsModel.setItem (item);
 		}
 	}

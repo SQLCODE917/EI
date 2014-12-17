@@ -14,21 +14,13 @@
 		cacheService,
 		itemService
 		) {
-		/*
-		 * Precondition: 'lastReturn' in scope
-		 * jExpression:
-		 * 	{ 'getHackerNewsItem': [firebaseObject]}
-		 * 	firebaseObject:
-		 * 		{ $value: 8602936, $id: "0", $priority: null }
-		 */
-		return function (jExpression) {
-			var args = jExpression.getHackerNewsItem;
 
-			// there can be only 1 parameter for this
-			if (args.lastIndexOf ('lastReturn') !== -1) {
-				return itemService (this.lastReturn.$value);
-			}
-			return itemService (args[0]);
+		/*
+		 * args: [firebaseObject]
+		 */
+		return function (jExpression, args) {
+			var firebaseObject = args[0];
+			return cacheService.find (firebaseObject.$value);
 		};	
 	}
 })();
