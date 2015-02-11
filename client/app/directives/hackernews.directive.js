@@ -15,19 +15,8 @@
 
 		return {
 			restrict: 'A',
-			scope: {
-				topstories: '='
-			},
 			link: function (scope, element, attributes) {
-						
-				scope.topstories().then (function (resolvedTopstoryIDs) {
-					React.renderComponent (
-						topstoriesReactClass ({
-							topstoryIDs: resolvedTopstoryIDs
-						}),
-						element[0]
-					);
-				});
+				React.renderComponent (topstoriesReactClass (), element[0]);
 			}
 		};
 	}

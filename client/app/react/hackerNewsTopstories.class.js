@@ -3,6 +3,7 @@
 
 	angular.module ('ei')
 		.factory ('hackerNewsTopstoriesReactClass', [
+			'$rootScope',
 			'$q',
 			'hackerNewsStoryReactClass',
 			'hackerNewsItemCacheService',
@@ -11,6 +12,7 @@
 			]);
 
 	function hackerNewsTopstories (
+		$rootScope,
 		$q, 
 		storyReactClass, 
 		hackerNewsItemCache,
@@ -23,51 +25,40 @@
 
 			getInitialState: function () {
 				return {
-					topstories: [],
+					topstories: hackerNewsModel.getTopstories (),
 					unwatch: function () {}
 				};
 			},
 
-			componentDidMount: function () {
+			componentWillMount: function () {
 				var self = this;
-				
-				var fetchTopstories = function () {
-					var topstoryPromises = self.props.topstoryIDs.map (
-						function (topstoryID, index) {
-								
-						//return hackerNewsItemCache.find (topstoryID.$value);
-						return hackerNewsModel.getItem (topstoryID.$value);
+			
+				/*
+				 * Wait for the controller jExp to bring home the bacon
+				 */	
+				var unwatch = $rootScope.$watch (function () { return hackerNewsModel.getTopstories (); },
+					function (newValue, oldValue) {
+						self.setState ({topstories: newValue});
 					});
 
-					$q.all (topstoryPromises).then (function (topstories) {
-						self.setState({ topstories: topstories });	
-					});
-				};
+				self.setState ({unwatch: unwatch});
 
-				fetchTopstories ();
-				
-				var unwatch = self.props.topstoryIDs.$watch (function (event) {
-					fetchTopstories ();
-				});
-
-				self.setState({unwatch: unwatch});
 			},
-
+				
 			componentWillUnmount: function () {
 				this.state.unwatch ();
 			},
 
 			render: function () {
 				var topstories = this.state.topstories;
-				
 				var topstoryListItems = [];
 
 				topstoryListItems = topstories.map (function (topstory, index) {
 					return React.DOM.li( 
 						{key: index,
-						"id": topstory.id},
+						"id": topstory.$id},
 						storyReactClass(
-							{story: topstory}
+							{storyID: topstory.$value}
 						)
 					);
 				});

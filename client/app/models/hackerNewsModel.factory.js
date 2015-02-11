@@ -6,10 +6,10 @@
 			[ '$log', hackerNewsModel ]);
 
 	function hackerNewsModel ($log) {
-		var topstories = [];
+		var topstories = new Array (100);
 		var items = {};
-		var nullItem = Object.seal ({});
-
+		var nullItem = Object.seal ({$id: -1, title: "Item Title"});
+		
 		var api = {
 			getItem: getItem,
 			setItem: setItem,
@@ -30,8 +30,8 @@
 		}
 
 		function setItem (item) {
-			items[item.id] = item;
-			return items[item.id];
+			items[item.$id] = item;
+			return items[item.$id];
 		}
 
 		function getItem (itemID) {
