@@ -46,10 +46,16 @@
 				if (story === hackerNewsModel.nullItem ()) {
 					return (React.DOM.div ({className: 'nullItem'}, "Loading..."));
 				}
+				console.log (story);
+				var storyID = story.$id;
+				var numChildren = (story.kids)? story.kids.length : 0;
+				var score = story.score;
+				var title = story.title;
+				var url = story.url;
 				return (
 					React.DOM.div ( 
 						{'data-story-id': story.$id}, 
-						story.$id + " : " + story.title 
+						storyID + ", " + numChildren + " children, " + score + " points : " + title 
 					)
 				);
 			}

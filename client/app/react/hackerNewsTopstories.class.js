@@ -39,6 +39,12 @@
 				var unwatch = $rootScope.$watch (function () { return hackerNewsModel.getTopstories (); },
 					function (newValue, oldValue) {
 						self.setState ({topstories: newValue});
+						if (typeof (newValue.$watch) !== "undefined") {
+							//this is when we get the magic topstories firebase object
+							newValue.$watch (function (event){
+								self.setState ({topstories: newValue});
+							});
+						}
 					});
 
 				self.setState ({unwatch: unwatch});
