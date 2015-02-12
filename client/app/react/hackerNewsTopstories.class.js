@@ -61,8 +61,7 @@
 
 				topstoryListItems = topstories.map (function (topstory, index) {
 					return React.DOM.li( 
-						{key: index,
-						"id": topstory.$id},
+						{'key': index},
 						storyReactClass(
 							{storyID: topstory.$value}
 						)

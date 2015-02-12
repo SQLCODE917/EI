@@ -61,23 +61,27 @@
 				var storyID = story.$id;
 				var numChildren = (story.kids)? story.kids.length : 0;
 				var score = (story.score)? story.score : "no";
-				var title = (story.title)? story.title : "[no title]";
+				var title = (story.title)? story.title : "";
 				var text = story.text;
 				var url = story.url;
 				
-				var storyHeader = React.DOM.div ( 
-							{'key': storyID}, 
-							[ 
-								React.DOM.div ({'key': storyID + "_header", onClick: this.onChildDisplayToggle}, storyID + ", " + numChildren + " children, " + score + " points : " + title),
-								React.DOM.div ({'key': storyID + "_text"}, story.text)
-							]
+				var storyHeader = React.DOM.div (
+						{'key': storyID}, 
+						[ 
+							React.DOM.span (
+								{'key': storyID + "_header", onClick: this.onChildDisplayToggle}, 
+								storyID + ", " + numChildren + " children, " + score + " points"
+								),
+							React.DOM.a ({'href': url, 'key': storyID + "_title"}, title),
+							React.DOM.div ({'key': storyID + "_text"}, story.text)
+						]
 						);
 				if (this.state.children.length === 0) {
 					return storyHeader;
 				} else {
 
 					var childrenItems = this.state.children.map (function (childID, index) {
-						return React.DOM.li ({'key': storyID + "_child_"+index},
+						return React.DOM.li ({'key': storyID + "_child_" + index},
 							React.createElement(hackerNewsItem, { 'storyID': childID }, "")
 							);
 					});
