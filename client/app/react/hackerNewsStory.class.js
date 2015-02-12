@@ -14,12 +14,24 @@
 		) {
 		var hackerNewsItem = React.createClass (
 		{
+			onChildDisplayToggle: function (event) {
+				if (this.state.children.length === 0 && this.state.story && this.state.story.kids && this.state.story.kids.length > 0) {
+					this.setState ({children: this.state.story.kids});
+				} else {
+					this.setState ({children: []});
+				}
+
+				event.preventDefault ();
+				event.stopPropagation ();
+			},
+			
 			displayName: 'HN_ITEM',
 
 			getInitialState: function () {
 				return {
 		   			story: hackerNewsModel.getItem (this.props.storyID),
-	   				unwatch: function () {}	
+	   				children: [],
+					unwatch: function () {}	
 				};	
 			},
 			
@@ -54,26 +66,24 @@
 				var url = story.url;
 				
 				var storyHeader = React.DOM.div ( 
-							{'key': storyID, 'data-story-id': storyID}, 
+							{'key': storyID}, 
 							[ 
-								React.DOM.div (null, storyID + ", " + numChildren + " children, " + score + " points : " + title),
-								React.DOM.div (null, story.text)
+								React.DOM.div ({'key': storyID + "_header", onClick: this.onChildDisplayToggle}, storyID + ", " + numChildren + " children, " + score + " points : " + title),
+								React.DOM.div ({'key': storyID + "_text"}, story.text)
 							]
 						);
-				if (numChildren ===0) {
+				if (this.state.children.length === 0) {
 					return storyHeader;
 				} else {
 
-					var childrenItems = story.kids.map (function (childID, index) {
-						return React.DOM.li (
-							{
-								'key': index,
-							   "id": childID
-							},
+					var childrenItems = this.state.children.map (function (childID, index) {
+						return React.DOM.li ({'key': storyID + "_child_"+index},
 							React.createElement(hackerNewsItem, { 'storyID': childID }, "")
 							);
 					});
-					return (React.DOM.div ({'key': storyID}, [storyHeader, React.DOM.ul (null, childrenItems)]));
+					return (React.DOM.div (null, 
+								[storyHeader, React.DOM.ul ({'key': storyID + "_children"}, childrenItems)]
+								));
 				}
 			}
 		});

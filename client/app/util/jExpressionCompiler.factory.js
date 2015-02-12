@@ -154,9 +154,6 @@
 
 			function subroutineHandler (env, jExpression) 
 			{
-				//take args from the execution context: lastReturn, probably
-				var args = resolveArguments (env, jExpression);
-				
 				return compile (env, subroutineBodyJExpression);
 			}
 		}
