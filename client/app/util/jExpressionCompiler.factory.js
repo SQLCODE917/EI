@@ -1,3 +1,10 @@
+/* Logic as data is a brilliant concept!
+ * Based on
+ * https://srikumarks.github.io/jexpr/
+ * Inspited by
+ * http://srikumarks.github.com/gyan/2012/04/15/j-expressions/
+ * http://srikumarks.github.com/gyan/2012/04/14/creating-dsls-in-javascript-using-j-expressions/
+ */
 (function () {
 	'use strict';
 
