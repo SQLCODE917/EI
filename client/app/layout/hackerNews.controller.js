@@ -20,15 +20,25 @@
 			var topStoriesTask = 
 			{ 'chain': [
 					{ 'getHackerNewsTopstories': [] },
-					{ 'then' : [] }, 
+					{ 'then': [] }, 
 					{ 'invoke': ['lastReturn'], 
 						'target': 'hackerNewsModel', 'key': 'setTopstories' },
 					{ 'map': 
 						{ 'chain' : [ 
-								{ 'getHackerNewsItem' : ['lastReturn'] },
-								{ 'then' : [] },
-								{ 'invoke' : ['lastReturn'], 
-									'target' : 'hackerNewsModel', 'key': 'setItem'}
+								{ 'getHackerNewsItem': ['lastReturn'] },
+								{ 'then': [] },
+								{ 'invoke': ['lastReturn'], 
+									'target': 'hackerNewsModel', 'key': 'setItem'},
+								{ 'getHackerNewsItemChildIDs': ['lastReturn'] },
+								{ 'map': 
+									{ 'chain': [
+											{ 'getHackerNewsItem': ['lastReturn'] },
+											{ 'then': [] },
+											{ 'invoke': ['lastReturn'],
+										   		'target': 'hackerNewsModel', 'key': 'setItem' }
+										]
+									}
+								}
 							] 
 						} 
 					}

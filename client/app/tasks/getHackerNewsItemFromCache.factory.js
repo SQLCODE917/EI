@@ -5,14 +5,12 @@
 		.factory ('getHackerNewsItem', [
 			'$log',
 			'hackerNewsItemCacheService',
-			'hackerNewsItemService',
 			getHackerNewsItem
 			]);
 
 	function getHackerNewsItem (
 		$log, 
-		cacheService,
-		itemService
+		cacheService
 		) {
 
 		/*

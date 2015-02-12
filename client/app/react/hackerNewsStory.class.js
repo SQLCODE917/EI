@@ -48,13 +48,17 @@
 				}
 				var storyID = story.$id;
 				var numChildren = (story.kids)? story.kids.length : 0;
-				var score = story.score;
-				var title = story.title;
+				var score = (story.score)? story.score : "no";
+				var title = (story.title)? story.title : "[no title]";
+				var text = story.text;
 				var url = story.url;
 				
 				var storyHeader = React.DOM.div ( 
-							{'key': storyID, 'data-story-id': story.$id}, 
-							storyID + ", " + numChildren + " children, " + score + " points : " + title 
+							{'key': storyID, 'data-story-id': storyID}, 
+							[ 
+								React.DOM.div (null, storyID + ", " + numChildren + " children, " + score + " points : " + title),
+								React.DOM.div (null, story.text)
+							]
 						);
 				if (numChildren ===0) {
 					return storyHeader;
@@ -69,7 +73,7 @@
 							React.createElement(hackerNewsItem, { 'storyID': childID }, "")
 							);
 					});
-					return (React.DOM.div (null, [storyHeader, React.DOM.ul (null, childrenItems)]));
+					return (React.DOM.div ({'key': storyID}, [storyHeader, React.DOM.ul (null, childrenItems)]));
 				}
 			}
 		});
