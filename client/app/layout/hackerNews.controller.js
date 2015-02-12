@@ -19,26 +19,38 @@
 
 			var topStoriesTask = 
 			{ 'chain': [
+					{ 'subroutine': 
+						{ 'getItemChildren':  
+							{ 'chain': 
+								[
+									{ 'getHackerNewsItemChildIDs': ['lastReturn'] },
+									{ 'map': 
+										{ 'chain': 
+											[
+												{ 'getHackerNewsItem': ['lastReturn'] },
+												{ 'then': [] },
+												{ 'invoke': ['lastReturn'],
+													'target': 'hackerNewsModel', 'key': 'setItem' },
+												{ 'getItemChildren': ['lastReturn']}
+											]
+										}
+									}
+								]					
+							}
+						}
+					},
 					{ 'getHackerNewsTopstories': [] },
 					{ 'then': [] }, 
 					{ 'invoke': ['lastReturn'], 
 						'target': 'hackerNewsModel', 'key': 'setTopstories' },
 					{ 'map': 
-						{ 'chain' : [ 
+						{ 'chain' : 
+							[ 
 								{ 'getHackerNewsItem': ['lastReturn'] },
 								{ 'then': [] },
 								{ 'invoke': ['lastReturn'], 
 									'target': 'hackerNewsModel', 'key': 'setItem'},
-								{ 'getHackerNewsItemChildIDs': ['lastReturn'] },
-								{ 'map': 
-									{ 'chain': [
-											{ 'getHackerNewsItem': ['lastReturn'] },
-											{ 'then': [] },
-											{ 'invoke': ['lastReturn'],
-										   		'target': 'hackerNewsModel', 'key': 'setItem' }
-										]
-									}
-								}
+								{ 'getItemChildren': ['lastReturn'] }	
 							] 
 						} 
 					}

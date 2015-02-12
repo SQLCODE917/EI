@@ -32,6 +32,7 @@
 		define (Env, 'chain', chainProvider); 
 		define (Env, 'map', mapProvider);
 		define (Env, 'then', thenProvider);
+		define (Env, 'subroutine', subroutineProvider);
 
 		return api (Env);
 
@@ -133,6 +134,33 @@
 			}
 		}
 
+		// subroutine utilities
+		/*
+		 * { subroutine: {name: jExpression}}
+		 */
+		function subroutineProvider (env, jExpression) {
+			var subroutineJExpression = jExpression.subroutine;
+			var subroutineName = getOperator (subroutineJExpression);
+			var subroutineBodyJExpression = subroutineJExpression[subroutineName];
+	
+			define (Env, subroutineName, subroutineHandler);
+			return asop;
+
+			// this is the ASOP for the subroutine, not it's body JExpression
+			function asop (M, input, success, failure) {
+				// pass the buck
+				M.start (success, input, M.end, failure);
+			}
+
+			function subroutineHandler (env, jExpression) 
+			{
+				//take args from the execution context: lastReturn, probably
+				var args = resolveArguments (env, jExpression);
+				
+				return compile (env, subroutineBodyJExpression);
+			}
+		}
+
 		// compiler utilities
 
 		/*
@@ -206,6 +234,8 @@
 							);
 				} else {
 					//error!
+					console.log (env);
+					console.log (jExpression);
 					throw new Error ("Operator " + 
 							operator + 
 							" is not a core or Angular function!");
