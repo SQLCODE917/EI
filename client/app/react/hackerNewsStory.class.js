@@ -12,9 +12,9 @@
 		$rootScope,
 		hackerNewsModel
 		) {
-		return React.createClass (
+		var hackerNewsItem = React.createClass (
 		{
-			displayName: 'HN_STORY',
+			displayName: 'HN_ITEM',
 
 			getInitialState: function () {
 				return {
@@ -46,19 +46,34 @@
 				if (story === hackerNewsModel.nullItem ()) {
 					return (React.DOM.div ({className: 'nullItem'}, "Loading..."));
 				}
-				console.log (story);
 				var storyID = story.$id;
 				var numChildren = (story.kids)? story.kids.length : 0;
 				var score = story.score;
 				var title = story.title;
 				var url = story.url;
-				return (
-					React.DOM.div ( 
-						{'data-story-id': story.$id}, 
-						storyID + ", " + numChildren + " children, " + score + " points : " + title 
-					)
-				);
+				
+				var storyHeader = React.DOM.div ( 
+							{'key': storyID, 'data-story-id': story.$id}, 
+							storyID + ", " + numChildren + " children, " + score + " points : " + title 
+						);
+				if (numChildren ===0) {
+					return storyHeader;
+				} else {
+
+					var childrenItems = story.kids.map (function (childID, index) {
+						return React.DOM.li (
+							{
+								'key': index,
+							   "id": childID
+							},
+							React.createElement(hackerNewsItem, { 'storyID': childID }, "")
+							);
+					});
+					return (React.DOM.div (null, [storyHeader, React.DOM.ul (null, childrenItems)]));
+				}
 			}
-		}); 
+		});
+
+		return hackerNewsItem;
 	}
 })();
