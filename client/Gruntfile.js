@@ -12,6 +12,8 @@
 		grunt.loadNpmTasks ('grunt-contrib-clean');
 		grunt.loadNpmTasks ('grunt-contrib-htmlmin');
 		grunt.loadNpmTasks ('grunt-karma');
+		grunt.loadNpmTasks ('grunt-protractor-runner');
+		grunt.loadNpmTasks ('grunt-protractor-webdriver');
 
 		//Project configuration
 		grunt.initConfig ({
@@ -99,23 +101,48 @@
 						'app/**/*.js'	
 					]	
 				},
-				unit: {
+				client: {
 					exclude: [
 						'**/*.integration.spec.js'
 					]	
 				},
-				integration: {
-					exclude: [
-						'**/*.unit.spec.js'
-					]
+			},
+
+			protractor: {
+				options: {
+					configFile: 'protractor.conf.js',
+					keepAlive: true,
+					args: {
+						seleniumAddress: 'http://localhost:4444/wd/hub',
+						baseUrl: 'http://localhost:9000',
+						capabilities: {
+							'browserName': 'chrome'
+						},
+						framework: 'jasmine'
+					}
+				},
+				client: {
+					options: {
+						args: {
+							specs: [ 'app/layout/hello.integration.spec.js']
+						}
+					}
+				}
+			},
+
+			protractor_webdriver: {
+				client: {
+					options: {
+						path: 'node_modules/selenium-server-standalone-jar/jar/selenium-server-standalone-2.44.0.jar'
+					}
 				}
 			}
-
 		});
 
 		grunt.registerTask ('test', [
-			'karma:unit',
-			'karma:integration'
+			'karma:client',
+			'protractor_webdriver:client',
+			'protractor:client'
 		]);
 
 		grunt.registerTask ('build', [
