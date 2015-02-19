@@ -19,8 +19,6 @@
 
 
 		it ('should use the right algorithm', inject (function (jExpressionCompiler) {
-			var expectedTasks = 
-				{'invoke':['Hello, World!'], 'target':'helloModel', 'key':'setGreeting'};
 			spyOn (jExpressionCompiler, 'compile');
 			spyOn (jExpressionCompiler, 'run');
 		
@@ -28,11 +26,6 @@
 		
 			expect (jExpressionCompiler.compile).toHaveBeenCalled ();
 			expect (jExpressionCompiler.run).toHaveBeenCalled ();
-
-			var testForEquality = 
-				JSON.stringify (expectedTasks) === JSON.stringify (actualTasks);
-
-			expect (testForEquality).toEqual (true);
 		}));
 	});
 })();

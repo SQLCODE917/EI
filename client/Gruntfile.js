@@ -11,7 +11,8 @@
 		grunt.loadNpmTasks ('grunt-contrib-uglify');
 		grunt.loadNpmTasks ('grunt-contrib-clean');
 		grunt.loadNpmTasks ('grunt-contrib-htmlmin');
-		
+		grunt.loadNpmTasks ('grunt-karma');
+
 		//Project configuration
 		grunt.initConfig ({
 			//I did not use a yeoman template, so no need to call these vars like I did:
@@ -79,9 +80,43 @@
 						dest: '<%= variables.dist %>'
 					}]
 				}
+			},
+
+			// since we run tests with Grunt, might as well configure it in the Gruntfile
+			karma: {
+				options: {
+					basePath: '',
+					singleRun: true,
+					frameworks: ['jasmine'],
+					browsers: ['PhantomJS'],
+					files: [
+						'bower_components/angular/angular.js',
+						'bower_components/angular-route/angular-route.js',
+						'bower_components/angular-mocks/angular-mocks.js',
+						'bower_components/firebase/firebase.js',
+						'bower_components/angularfire/dist/angularfire.js',
+						'app/*.js',
+						'app/**/*.js'	
+					]	
+				},
+				unit: {
+					exclude: [
+						'**/*.integration.spec.js'
+					]	
+				},
+				integration: {
+					exclude: [
+						'**/*.unit.spec.js'
+					]
+				}
 			}
 
 		});
+
+		grunt.registerTask ('test', [
+			'karma:unit',
+			'karma:integration'
+		]);
 
 		grunt.registerTask ('build', [
 			'clean:client',
